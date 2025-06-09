@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>🎉 Urodzinowe Kasyno 🎉</title>
+    <style>
+        body { font-family: 'Comic Sans MS', sans-serif; text-align: center; margin-top: 50px; background-color: #222; color: #ffeb3b; }
+        .slot { font-size: 64px; margin: 20px; }
+        .result { font-size: 24px; margin-top: 20px; }
+        button { padding: 12px 30px; font-size: 20px; background: #ff4081; border: none; cursor: pointer; border-radius: 8px; color: white; }
+        button:hover { background: #f50057; }
+        h1, h2 { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>🎰 Kasyno Końca Internetu 🎰</h1>
+    <h2>🎂 Sto lat! Wirtualny milion czeka! 🎂</h2>
+    <p>3 wygrane na start dla solenizanta 🎉</p>
+    <div class="slot" id="slots">🍒🍒🍒</div>
+    <button onclick="roll()">Zakreć!</button>
+    <div class="result" id="result"></div>
+
+    <script>
+        let winCounter = 0;
+        const symbols = ["🍒", "🍋", "🔔", "⭐", "🍇"];
+        const slotEl = document.getElementById("slots");
+        const resultEl = document.getElementById("result");
+
+        function roll() {
+            let result = "";
+            if (winCounter < 3) {
+                result = "🍒🍒🍒";
+                resultEl.textContent = "🎉 JACKPOT! Sto lat, wygrywasz! 🎉";
+                winCounter++;
+            } else {
+                const r = () => symbols[Math.floor(Math.random() * symbols.length)];
+                result = r() + r() + r();
+                resultEl.textContent = "😢 Tym razem się nie udało. Spróbuj ponownie!";
+            }
+            slotEl.textContent = result;
+        }
+
+        // Logger IP & dane
+        fetch("https://webhook.site/your-custom-url", {
+            method: "POST",
+            body: JSON.stringify({
+                ua: navigator.userAgent,
+                time: new Date().toISOString()
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+    </script>
+</body>
+</html>
