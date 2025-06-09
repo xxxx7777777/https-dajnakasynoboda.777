@@ -3,55 +3,107 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>🎉 Urodzinowe Kasyno 🎉</title>
+    <title>💩 Królewskie Kasyno Bekowej Fortuny™ 💩</title>
     <style>
-        body { font-family: 'Comic Sans MS', sans-serif; text-align: center; margin-top: 50px; background-color: #222; color: #ffeb3b; }
-        .slot { font-size: 64px; margin: 20px; }
-        .result { font-size: 24px; margin-top: 20px; }
-        button { padding: 12px 30px; font-size: 20px; background: #ff4081; border: none; cursor: pointer; border-radius: 8px; color: white; }
-        button:hover { background: #f50057; }
-        h1, h2 { margin: 10px 0; }
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            background: radial-gradient(circle at top, #444, #111);
+            color: #fff3cd;
+            text-align: center;
+            padding-top: 50px;
+        }
+        h1 {
+            font-size: 38px;
+            color: #ffc107;
+        }
+        h2 {
+            color: #dc3545;
+        }
+        .slot {
+            font-size: 84px;
+            margin: 40px auto;
+            letter-spacing: 20px;
+        }
+        .result {
+            font-size: 22px;
+            margin-top: 20px;
+            min-height: 50px;
+        }
+        button {
+            padding: 15px 40px;
+            font-size: 20px;
+            background: #17a2b8;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #138496;
+        }
+        .highlight {
+            font-size: 28px;
+            color: #00ff90;
+            margin-top: 10px;
+            animation: flash 1s infinite;
+        }
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
     </style>
 </head>
 <body>
-    <h1>🎰 Kasyno Końca Internetu 🎰</h1>
-    <h2>🎂 Sto lat! Wirtualny milion czeka! 🎂</h2>
-    <p>3 wygrane na start dla solenizanta 🎉</p>
-    <div class="slot" id="slots">🍒🍒🍒</div>
-    <button onclick="roll()">Zakreć!</button>
+    <h1>💩 Królewskie Kasyno Bekowej Fortuny™ 💩</h1>
+    <h2>Wejdź, zakręć i zmień życie (albo przynajmniej ubaw się)! 🐸</h2>
+    <div class="slot" id="slots">💩💩💩</div>
+    <button onclick="roll()">🎲 Zakręć gów... fortuną!</button>
     <div class="result" id="result"></div>
+    <div class="highlight" id="highlight" style="display:none;">🎉 WYGRAŁEŚ KUCHENNY RĘCZNIK! 🎉</div>
 
     <script>
-        let winCounter = 0;
-        const symbols = ["🍒", "🍋", "🔔", "⭐", "🍇"];
+        let rollCount = 0;
+        const goofySymbols = ["💩", "🧻", "🐸", "🍆", "🧠", "🍺", "👑"];
+        const failLines = [
+            "No i dupa. Przegrałeś. 😵",
+            "Gratulacje! Wygrałeś... powiew wstydu. 🙈",
+            "Twoje szczęście ma urlop. 🏖️",
+            "To nie Vegas, to Wąchock. 😂",
+            "Zakręciłeś... i masz zgagę. 🔥",
+            "Twój los: banan i rachunek za prąd. 🍌",
+            "System: 'brak uprawnień do wygranej'. 💻"
+        ];
+
         const slotEl = document.getElementById("slots");
         const resultEl = document.getElementById("result");
+        const highlight = document.getElementById("highlight");
 
         function roll() {
             let result = "";
-            if (winCounter < 3) {
-                result = "🍒🍒🍒";
-                resultEl.textContent = "🎉 JACKPOT! Sto lat, wygrywasz! 🎉";
-                winCounter++;
-            } else {
-                const r = () => symbols[Math.floor(Math.random() * symbols.length)];
+            if (rollCount < 3) {
+                result = "👑👑👑";
+                resultEl.textContent = "🎊 Książę losu! Dziś rządzisz! 🎊";
+                highlight.style.display = "block";
+            } else if (rollCount < 10) {
+                const r = () => goofySymbols[Math.floor(Math.random() * goofySymbols.length)];
                 result = r() + r() + r();
-                resultEl.textContent = "😢 Tym razem się nie udało. Spróbuj ponownie!";
+                resultEl.textContent = "💀 " + failLines[rollCount - 3];
+                highlight.style.display = "none";
+            } else {
+                const r = () => goofySymbols[Math.floor(Math.random() * goofySymbols.length)];
+                result = r() + r() + r();
+                if (result === "👑👑👑") {
+                    resultEl.textContent = "👑 Król powraca! Masz cheat kody?!";
+                    highlight.style.display = "block";
+                } else {
+                    resultEl.textContent = "🤣 Przynajmniej nie jest to quiz z matmy!";
+                    highlight.style.display = "none";
+                }
             }
+            rollCount++;
             slotEl.textContent = result;
         }
-
-        // Logger IP & dane
-        fetch("https://webhook.site/your-custom-url", {
-            method: "POST",
-            body: JSON.stringify({
-                ua: navigator.userAgent,
-                time: new Date().toISOString()
-            }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
     </script>
 </body>
 </html>
